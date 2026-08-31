@@ -42,9 +42,11 @@ run the workflow once per company.
    below. Caps to keep a run bounded: at most ~12 products, at most ~8 features
    per product. Prefer covering more products over exhausting one product's
    features.
-4. **Render.** Run:
-   `python3 ~/.claude/skills/product-teardown/scripts/render.py catalog.json`
-   It prints the path of the generated `<company-slug>-catalog.html`.
+4. **Render.** Run the bundled render script against `catalog.json`:
+   `python3 <skill-dir>/scripts/render.py catalog.json`
+   where `<skill-dir>` is the directory this `SKILL.md` lives in — in Claude Code
+   that is `~/.claude/skills/product-teardown`. It prints the path of the
+   generated `<company-slug>-catalog.html`.
 5. **Report.**
    - Give the user the path to the generated `<company-slug>-catalog.html`.
    - Offer to open it in the browser preview (serve the directory with
@@ -92,8 +94,8 @@ Do not add `status` to ordinary generally-available products or features.
 
 ## Testing the skill machinery
 
-`python3 ~/.claude/skills/product-teardown/scripts/test_render.py -v` — exercises
-the render script against `assets/sample-catalog.json`.
+`python3 <skill-dir>/scripts/test_render.py -v` — exercises the render script
+against `assets/sample-catalog.json`.
 
 Manual acceptance check (render the sample, then in a browser):
 
