@@ -1,0 +1,7 @@
+# Python
+__pycache__/
+*.pyc
+
+# Skill output artifacts (render.py writes these into the working directory)
+/catalog.json
+/*-catalog.html

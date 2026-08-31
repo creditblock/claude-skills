@@ -1,0 +1,134 @@
+{
+  "company": "Equifax",
+  "generatedAt": "2026-08-30",
+  "sources": [
+    "https://www.equifax.com/business/",
+    "https://developer.equifax.com/"
+  ],
+  "products": [
+    {
+      "name": "Business Verification Solution",
+      "url": "https://www.equifax.com/business/",
+      "description": "An online service that helps a business confirm the legitimacy of another business and its owners during onboarding. It combines enriched data, confidence scoring, TIN match, OFAC screening, and linked-business analysis to reduce fraud and support KYB compliance, and is available in near real time through the Equifax Developer Portal.",
+      "positioning": "Presented as a real-time Know Your Business platform that pairs business-entity verification with digital identity trust and employment or ownership validation.",
+      "targetAudience": "US lenders, financial institutions, insurers, internet and phone service providers, and other business service providers that onboard new business accounts, vendors, or partners at scale.",
+      "pricing": "Contact sales for pricing",
+      "categories": [
+        {
+          "name": "Compliance",
+          "features": [
+            {
+              "name": "OFAC Screening",
+              "description": "Screens the business against Office of Foreign Assets Control lists to check for sanctions exposure.",
+              "points": [
+                "Automated screening against OFAC sanctions lists",
+                "Supports KYB compliance requirements",
+                "Runs inside the verification workflow"
+              ],
+              "sources": ["https://www.equifax.com/business/"]
+            },
+            {
+              "name": "TIN Match and IRS Verification",
+              "description": "Checks the active status of a business Tax Identification Number directly against IRS records.",
+              "points": [
+                "Confirms EIN status using IRS data",
+                "Acts as a legitimacy signal for the business",
+                "Supports regulatory compliance requirements"
+              ],
+              "sources": ["https://www.equifax.com/business/"]
+            }
+          ]
+        },
+        {
+          "name": "Fraud Detection",
+          "features": [
+            {
+              "name": "Business Verification Index",
+              "description": "Analyzes the business entity and returns a confidence score for fraud potential during onboarding.",
+              "points": [
+                "Uses enriched data to produce a fraud-potential index",
+                "Reviews business name, legal name, and address matches",
+                "Available in near real time via API"
+              ],
+              "sources": ["https://www.equifax.com/business/"]
+            },
+            {
+              "name": "Digital Identity Trust Integration",
+              "description": "Uses several identity and digital data points to verify the applicant as part of business verification.",
+              "points": [
+                "Checks that the applicant is who they claim to be",
+                "Complements traditional business verification",
+                "Flags digital risk indicators"
+              ],
+              "sources": ["https://www.equifax.com/business/"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Account Verification",
+      "url": "https://www.equifax.com/business/",
+      "description": "A service that confirms bank-account ownership and status to reduce payment risk before a transaction is initiated.",
+      "targetAudience": "Lenders and billers that initiate ACH or other account-based payments.",
+      "pricing": "Contact sales for pricing",
+      "categories": [
+        {
+          "name": "Verification",
+          "features": [
+            {
+              "name": "Account Ownership Check",
+              "description": "Confirms that the consumer or business owns the bank account provided.",
+              "points": [
+                "Matches the account holder to the applicant identity",
+                "Reduces first-party payment fraud"
+              ],
+              "sources": ["https://www.equifax.com/business/"]
+            },
+            {
+              "name": "Account Status Check",
+              "description": "Confirms the account is open and in good standing before a debit is attempted.",
+              "points": [
+                "Checks the account is active before debit",
+                "Lowers return and NSF rates"
+              ],
+              "sources": ["https://www.equifax.com/business/"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Equifax Developer Portal",
+      "url": "https://developer.equifax.com/",
+      "description": "A self-service portal where developers reach Equifax APIs, documentation, and sandbox environments to integrate verification and credit services.",
+      "targetAudience": "Developers and integration teams at Equifax customers.",
+      "pricing": "Free to browse; API usage is priced per product.",
+      "categories": [
+        {
+          "name": "Developer Experience",
+          "features": [
+            {
+              "name": "API Documentation",
+              "description": "Reference documentation and integration guides for each Equifax API.",
+              "points": [
+                "OpenAPI specifications and code samples",
+                "Versioned endpoints"
+              ],
+              "sources": ["https://developer.equifax.com/"]
+            },
+            {
+              "name": "Sandbox Environment",
+              "description": "A test environment with mock data for integration work before go-live.",
+              "points": [
+                "Non-production API keys",
+                "Deterministic test records"
+              ],
+              "sources": ["https://developer.equifax.com/"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Teardown</title>
+<style>
+  :root {
+    --bg:#0d0d0f; --panel:#141417; --panel-2:#1c1c22; --border:#2a2a31;
+    --text:#e7e7ea; --muted:#9a9aa5; --badge-bg:rgba(108,92,231,.2); --badge-fg:#b7aef7;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); color:var(--text);
+    font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  a { color:#8ab4ff; text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  #app { display:grid; grid-template-columns:280px 1fr; grid-template-rows:auto 1fr; min-height:100vh; }
+  .topbar {
+    grid-column:1 / -1; display:flex; align-items:center; gap:10px;
+    padding:12px 20px; border-bottom:1px solid var(--border); background:var(--panel);
+  }
+  .topbar .crumb { color:var(--muted); }
+  .topbar .company { font-weight:600; }
+  .sidebar { border-right:1px solid var(--border); background:var(--panel); padding:12px; }
+  .sidebar .count { color:var(--muted); font-size:12px; margin:6px 8px 12px; }
+  .prod-item { padding:10px 12px; border-radius:8px; cursor:pointer; margin-bottom:2px; }
+  .prod-item:hover { background:var(--panel-2); }
+  .prod-item.active { background:var(--panel-2); }
+  .prod-item .name { font-weight:500; }
+  .prod-item .sub { color:var(--muted); font-size:12px; margin-top:2px; }
+  .main { padding:28px 36px; max-width:1100px; }
+  .main h1 { font-size:22px; margin:0 0 8px; display:flex; align-items:center; gap:10px; }
+  .badge {
+    font-size:10px; letter-spacing:.05em; text-transform:uppercase;
+    padding:2px 6px; border-radius:4px; background:var(--badge-bg); color:var(--badge-fg);
+  }
+  .desc { color:var(--muted); max-width:900px; }
+  .url { color:var(--muted); font-size:12px; margin-top:6px; }
+  .block { margin-top:22px; }
+  .block .label, .features > .label {
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;
+  }
+  .features { margin-top:30px; }
+  .cat-band {
+    margin-top:16px; padding:9px 14px; border-radius:6px; font-weight:600; color:#fff;
+    display:flex; align-items:center; gap:10px;
+  }
+  .cat-band .n { font-weight:400; opacity:.85; font-size:12px; }
+  .feat {
+    display:grid; grid-template-columns:220px 1fr 90px; gap:16px;
+    padding:14px; border-bottom:1px solid var(--border);
+  }
+  .feat .fname { font-weight:500; }
+  .feat ul { margin:8px 0 0; padding-left:18px; color:var(--muted); }
+  .feat .srcline { margin-top:8px; color:var(--muted); font-size:12px; }
+  .feat .srcline button {
+    background:none; border:none; color:#8ab4ff; cursor:pointer; padding:0; font:inherit;
+  }
+  .feat .srcline button:hover { text-decoration:underline; }
+  .feat .srcs { margin-top:6px; font-size:12px; }
+  .feat .srcs a { display:block; word-break:break-all; }
+  .feat .fstatus { color:var(--muted); font-size:12px; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const DATA = /*__CATALOG_JSON__*/;
+document.title = DATA.company + " — Product Teardown";
+const BANDS = [
+  "linear-gradient(90deg,#d6336c,#f06595)",
+  "linear-gradient(90deg,#e8590c,#f76707)",
+  "linear-gradient(90deg,#f08c00,#f59f00)",
+  "linear-gradient(90deg,#2f9e44,#40c057)",
+  "linear-gradient(90deg,#1971c2,#3b82f6)",
+  "linear-gradient(90deg,#7048e8,#9775fa)"
+];
+let active = 0;
+
+function el(tag, props, ...kids) {
+  const n = document.createElement(tag);
+  Object.assign(n, props || {});
+  for (const k of kids) {
+    if (k == null || k === false) continue;
+    n.append(k.nodeType ? k : document.createTextNode(String(k)));
+  }
+  return n;
+}
+function featureCount(p) {
+  return p.categories.reduce((s, c) => s + c.features.length, 0);
+}
+function render() {
+  const app = document.getElementById("app");
+  app.innerHTML = "";
+  const totalFeat = DATA.products.reduce((s, p) => s + featureCount(p), 0);
+
+  app.append(el("div", { className: "topbar" },
+    el("span", { className: "crumb" }, "Products"),
+    el("span", { className: "company" }, DATA.company)));
+
+  const side = el("div", { className: "sidebar" });
+  side.append(el("div", { className: "count" },
+    DATA.products.length + " products · " + totalFeat + " features"));
+  DATA.products.forEach((p, i) => {
+    const item = el("div", { className: "prod-item" + (i === active ? " active" : "") },
+      el("div", { className: "name" }, p.name),
+      el("div", { className: "sub" }, featureCount(p) + " features"));
+    item.onclick = () => { active = i; render(); window.scrollTo(0, 0); };
+    side.append(item);
+  });
+  app.append(side);
+
+  app.append(renderMain(DATA.products[active]));
+}
+function renderMain(p) {
+  const main = el("div", { className: "main" });
+  const h1 = el("h1", {}, p.name);
+  if (p.status) h1.append(el("span", { className: "badge" }, p.status));
+  main.append(h1);
+  main.append(el("div", { className: "desc" }, p.description));
+  if (p.url) main.append(el("div", { className: "url" }, p.url));
+
+  [["Positioning", p.positioning],
+   ["Target audience", p.targetAudience],
+   ["Pricing", p.pricing]].forEach(([label, val]) => {
+    if (!val) return;
+    main.append(el("div", { className: "block" },
+      el("div", { className: "label" }, label),
+      el("div", {}, val)));
+  });
+
+  const feats = el("div", { className: "features" });
+  feats.append(el("div", { className: "label" }, "Features (" + featureCount(p) + ")"));
+  p.categories.forEach((c, ci) => {
+    const band = el("div", { className: "cat-band" }, c.name,
+      el("span", { className: "n" }, c.features.length + " features"));
+    band.style.background = BANDS[ci % BANDS.length];
+    feats.append(band);
+    c.features.forEach(f => feats.append(renderFeature(f)));
+  });
+  main.append(feats);
+  return main;
+}
+function renderFeature(f) {
+  const row = el("div", { className: "feat" });
+  row.append(el("div", { className: "fname" }, f.name));
+
+  const mid = el("div", {}, el("div", {}, f.description));
+  if (Array.isArray(f.points) && f.points.length) {
+    const ul = el("ul");
+    f.points.forEach(pt => ul.append(el("li", {}, pt)));
+    mid.append(ul);
+  }
+  const srcs = el("div", { className: "srcs hidden" });
+  (f.sources || []).forEach(u => {
+    const ok = /^https?:\/\//i.test(String(u));
+    srcs.append(ok
+      ? el("a", { href: u, target: "_blank", rel: "noopener" }, u)
+      : el("div", {}, u));
+  });
+  const n = (f.sources || []).length;
+  const btn = el("button", {}, "View details");
+  btn.onclick = () => srcs.classList.toggle("hidden");
+  mid.append(
+    el("div", { className: "srcline" },
+      n + (n === 1 ? " web source " : " web sources "), btn),
+    srcs);
+  row.append(mid);
+
+  row.append(el("div", { className: "fstatus" }, f.status || ""));
+  return row;
+}
+render();
+</script>
+</body>
+</html>
