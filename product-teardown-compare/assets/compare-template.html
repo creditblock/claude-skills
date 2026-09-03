@@ -97,6 +97,33 @@
   table.matrix.diffonly tr.cap.same { display:none; }
   table.matrix.diffonly tr.theme.allsame { display:none; }
   .hidden { display:none; }
+
+  @media print {
+    @page { size: landscape; margin: 12mm; }
+    :root, :root[data-theme="dark"], :root:not([data-theme]) {
+      --bg:#ffffff; --panel:#ffffff; --line:#d8d3ca;
+      --text:#1a1a1a; --muted:#333; --dim:#555; --faint:#777; --bullet:#555;
+      --hover:transparent;
+      --link:#33299e; --link-hover:#33299e;
+      --btn-line:#ccc; --btn-line-hover:#ccc; --kicker:#555;
+      --st-yes:#1a7f37; --st-partial:#9a5b00; --st-no:#777; --st-unknown:#999;
+      --chip:#f0efe9; --ctl-on:transparent;
+    }
+    body { background:#fff; }
+    #app { height:auto; display:block; }
+    .tbtn, .controls { display:none; }
+    .scroller { overflow:visible; }
+    table.matrix { width:100%; table-layout:fixed; }
+    thead { display:table-header-group; }
+    tr.cap, tr.theme { break-inside:avoid; page-break-inside:avoid; }
+    thead th, .corner, th.capname, tr.theme th { position:static; }
+    .corner, th.capname { width:17%; min-width:0; }
+    td.cell { cursor:auto; }
+    td.cell .note { display:none; }
+    td.cell .detail, td.cell .detail.hidden { display:block; margin-top:4px; }
+    td.cell .detail a { color:var(--link); }
+    a { text-decoration:none; }
+  }
 </style>
 </head>
 <body>
