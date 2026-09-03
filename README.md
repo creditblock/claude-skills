@@ -29,3 +29,18 @@ product-teardown/
 ```
 
 **Test:** `python3 product-teardown/scripts/test_render.py -v`
+
+### product-teardown-compare
+
+Researches 2–5 companies and produces a single self-contained interactive HTML
+**capability matrix** — capabilities as rows (grouped into themes), companies as
+columns, each cell a status (yes / partial / no / unknown) with a one-line note
+and a source. Sibling to `product-teardown`; use that for a deep single-company
+catalog.
+
+**Install:** copy the `product-teardown-compare/` directory into `~/.claude/skills/`.
+
+**Use:** ask Claude to compare a set of companies, e.g. *"compare Secoda, Atlan
+and Collibra on data catalog and governance"*.
+
+**Test:** `python3 product-teardown-compare/scripts/test_render_compare.py -v`

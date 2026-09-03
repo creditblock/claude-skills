@@ -1,0 +1,67 @@
+{
+  "title": "Data catalog & governance — Secoda vs Atlan vs Collibra",
+  "generatedAt": "2026-09-02",
+  "theme": "dark",
+  "companies": [
+    { "name": "Secoda", "url": "https://www.secoda.co/", "note": "AI platform for data and analytics" },
+    { "name": "Atlan", "url": "https://atlan.com/", "note": "The context layer for AI" },
+    { "name": "Collibra", "url": "https://www.collibra.com/", "note": "Enterprise data governance platform" }
+  ],
+  "themes": [
+    {
+      "name": "Discovery & search",
+      "capabilities": [
+        {
+          "name": "Natural-language / AI search",
+          "description": "Ask for data in plain language rather than by table name.",
+          "cells": {
+            "Secoda": { "status": "yes", "note": "AI-powered search across the stack with owners and usage", "source": "https://www.secoda.co/data-catalog" },
+            "Atlan": { "status": "yes", "note": "Conversational search in the Data Marketplace via AI Copilot", "source": "https://atlan.com/data-marketplace/" },
+            "Collibra": { "status": "partial", "note": "Faceted catalog search; AI assist is newer", "source": "https://www.collibra.com/us/en/products/data-catalog" }
+          }
+        },
+        {
+          "name": "Automated metadata ingestion",
+          "description": "Pull technical metadata from sources without manual entry.",
+          "cells": {
+            "Secoda": { "status": "yes", "note": "No-code integrations, automated schema and metadata ingestion", "source": "https://www.secoda.co/data-catalog" },
+            "Atlan": { "status": "yes", "note": "80+ connectors feed the Enterprise Data Graph", "source": "https://atlan.com/" },
+            "Collibra": { "status": "yes", "note": "Catalog connects to cloud platforms, databases and BI tools", "source": "https://www.collibra.com/us/en/products/data-catalog" }
+          }
+        },
+        {
+          "name": "Browser extension",
+          "description": "Surface catalog context inside other web tools.",
+          "cells": {
+            "Secoda": { "status": "yes", "note": "Chrome extension for in-browser discovery and metadata editing", "source": "https://www.secoda.co/" },
+            "Atlan": { "status": "yes", "note": "Everywhere extension surfaces context in Salesforce, Tableau and more", "source": "https://atlan.com/platform" },
+            "Collibra": { "status": "unknown", "note": "", "source": "" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Governance & access",
+      "capabilities": [
+        {
+          "name": "Role-based access control",
+          "description": "Grant data access by role, team or domain.",
+          "cells": {
+            "Secoda": { "status": "yes", "note": "Granular RBAC with custom roles per team", "source": "https://www.secoda.co/data-governance" },
+            "Atlan": { "status": "yes", "note": "Classification-driven, domain-aware policies enforced at discovery", "source": "https://atlan.com/data-marketplace/" },
+            "Collibra": { "status": "yes", "note": "Role- and responsibility-based access with a governance operating model", "source": "https://www.collibra.com/us/en/products/data-governance" }
+          }
+        },
+        {
+          "name": "Prebuilt compliance policies",
+          "description": "Templates for GDPR, HIPAA, CCPA and similar regimes.",
+          "cells": {
+            "Secoda": { "status": "yes", "note": "Built-in GDPR and HIPAA policy templates applied across the stack", "source": "https://www.secoda.co/data-governance" },
+            "Atlan": { "status": "partial", "note": "Policy framework plus a dedicated Data Privacy product", "source": "https://atlan.com/" },
+            "Collibra": { "status": "yes", "note": "Automated compliance checks and audit-ready policy views", "source": "https://www.collibra.com/us/en/products/data-governance" }
+          }
+        }
+      ]
+    }
+  ]
+}
