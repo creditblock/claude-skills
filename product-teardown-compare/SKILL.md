@@ -61,6 +61,11 @@ asks for a capability / feature matrix across vendors. One comparison per run.
    Artifact, pass only the `<style>` / `<div id="app">` / `<script>` blocks with
    a per-comparison title and description, not the whole document. Leave
    `compare.json` next to the HTML for re-rendering.
+   - For a PDF, the page has a print stylesheet: opening it and printing to PDF
+     in landscape gives a paginated light-theme report with every cell's note
+     and source expanded and the company header repeated on each page. Headless
+     Chrome works too: `chrome --headless --no-pdf-header-footer
+     --print-to-pdf=out.pdf file://<path>`.
 
 ## compare.json schema
 
