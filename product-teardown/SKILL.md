@@ -42,6 +42,13 @@ run the workflow once per company.
    below. Caps to keep a run bounded: at most ~12 products, at most ~8 features
    per product. Prefer covering more products over exhausting one product's
    features.
+   - Optional: capture the company's favicon/logo for the header. Find it from
+     the homepage `<link rel="icon">` (or try `/favicon.ico`), download it,
+     downsize to ~32–64px, base64-encode it, and put
+     `"logo": "data:image/png;base64,<...>"` on the top level. It MUST be a
+     `data:` URI (the rendered HTML makes no external requests) and stay small.
+     If you can't fetch or encode it, omit `logo` — the header falls back to a
+     monogram of the company name.
 4. **Render.** Run the bundled render script against `catalog.json`:
    `python3 <skill-dir>/scripts/render.py catalog.json`
    where `<skill-dir>` is the directory this `SKILL.md` lives in — in Claude Code
@@ -62,6 +69,11 @@ run the workflow once per company.
 ## catalog.json schema
 
 - `company` (string, required)
+- `logo` (string) — a `data:image/...;base64,` URI for the header icon; omit to
+  fall back to a name monogram. Never a remote URL (no external requests).
+- `theme` (string) — `"dark"` (default) or `"light"` for the initial background.
+  The page also has a light/dark toggle in the header; a viewer's choice is
+  remembered in that browser.
 - `generatedAt` (string, `YYYY-MM-DD`) — set to today's date (kept in
   catalog.json for provenance; not shown in the rendered HTML)
 - `sources` (array of URLs) — top-level pages you consulted (kept in
@@ -99,9 +111,11 @@ against `assets/sample-catalog.json`.
 
 Manual acceptance check (render the sample, then in a browser):
 
+- header shows the company logo (or a name monogram) and a light/dark toggle
 - sidebar lists all products with per-product feature counts
 - clicking a product switches the main panel and moves the active highlight
-- each category renders a distinct gradient band
-- "View details" toggles a feature's source links
+- each category has a distinct gradient icon tile; feature cards flow in a grid
+- the "N sources" button on a card toggles its source links
+- toggling the theme flips the background and survives a reload
 - browser console shows zero errors
 - network panel shows zero external requests
