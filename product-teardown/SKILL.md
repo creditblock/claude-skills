@@ -7,8 +7,8 @@ description: Use when the user wants a competitive product teardown or catalog o
 
 Research one company's public website and emit a single self-contained HTML file
 that catalogs its products and, per product, its features grouped by category —
-styled like a product-catalog console (dark theme, left product nav, feature
-tables, source citations).
+styled like a product-catalog console (light or dark, left product nav,
+feature cards, source citations).
 
 ## When to use
 
