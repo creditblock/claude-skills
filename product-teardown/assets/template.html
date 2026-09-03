@@ -6,63 +6,80 @@
 <title>Product Teardown</title>
 <style>
   :root {
-    --bg:#0d0d0f; --panel:#141417; --panel-2:#1c1c22; --border:#2a2a31;
-    --text:#e7e7ea; --muted:#9a9aa5; --badge-bg:rgba(108,92,231,.2); --badge-fg:#b7aef7;
+    --bg:#0c0c0e; --line:#1e1e24; --line-2:#1f1f26;
+    --card:#14141a; --card-line:#242a3a;
+    --text:#e9e9ee; --muted:#a6a6af; --dim:#8a8a94; --faint:#75757e;
   }
   * { box-sizing:border-box; }
   body {
     margin:0; background:var(--bg); color:var(--text);
-    font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font:14px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
-  a { color:#8ab4ff; text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  #app { display:grid; grid-template-columns:280px 1fr; grid-template-rows:auto 1fr; min-height:100vh; }
-  .topbar {
-    grid-column:1 / -1; display:flex; align-items:center; gap:10px;
-    padding:12px 20px; border-bottom:1px solid var(--border); background:var(--panel);
-  }
-  .topbar .crumb { color:var(--muted); }
-  .topbar .company { font-weight:600; }
-  .sidebar { border-right:1px solid var(--border); background:var(--panel); padding:12px; }
-  .sidebar .count { color:var(--muted); font-size:12px; margin:6px 8px 12px; }
-  .prod-item { padding:10px 12px; border-radius:8px; cursor:pointer; margin-bottom:2px; }
-  .prod-item:hover { background:var(--panel-2); }
-  .prod-item.active { background:var(--panel-2); }
-  .prod-item .name { font-weight:500; }
-  .prod-item .sub { color:var(--muted); font-size:12px; margin-top:2px; }
-  .main { padding:28px 36px; max-width:1100px; }
-  .main h1 { font-size:22px; margin:0 0 8px; display:flex; align-items:center; gap:10px; }
-  .badge {
-    font-size:10px; letter-spacing:.05em; text-transform:uppercase;
-    padding:2px 6px; border-radius:4px; background:var(--badge-bg); color:var(--badge-fg);
-  }
-  .desc { color:var(--muted); max-width:900px; }
-  .url { color:var(--muted); font-size:12px; margin-top:6px; }
-  .block { margin-top:22px; }
-  .block .label, .features > .label {
-    font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;
-  }
-  .features { margin-top:30px; }
-  .cat-band {
-    margin-top:16px; padding:9px 14px; border-radius:6px; font-weight:600; color:#fff;
-    display:flex; align-items:center; gap:10px;
-  }
-  .cat-band .n { font-weight:400; opacity:.85; font-size:12px; }
-  .feat {
-    display:grid; grid-template-columns:220px 1fr 90px; gap:16px;
-    padding:14px; border-bottom:1px solid var(--border);
-  }
-  .feat .fname { font-weight:500; }
-  .feat ul { margin:8px 0 0; padding-left:18px; color:var(--muted); }
-  .feat .srcline { margin-top:8px; color:var(--muted); font-size:12px; }
-  .feat .srcline button {
-    background:none; border:none; color:#8ab4ff; cursor:pointer; padding:0; font:inherit;
-  }
-  .feat .srcline button:hover { text-decoration:underline; }
-  .feat .srcs { margin-top:6px; font-size:12px; }
-  .feat .srcs a { display:block; word-break:break-all; }
-  .feat .fstatus { color:var(--muted); font-size:12px; }
+  a { color:#8f83f2; text-decoration:none; }
+  a:hover { color:#a99ff6; text-decoration:underline; }
+  svg { display:block; }
+  #app { min-height:100vh; display:flex; flex-direction:column; }
+
+  .topbar { display:flex; align-items:center; gap:12px; padding:0 24px; height:56px; border-bottom:1px solid var(--line); flex-shrink:0; }
+  .topbar .gicon { width:15px; height:15px; color:#85858f; display:grid; place-items:center; }
+  .topbar .crumb { font-size:13px; color:#9a9aa5; }
+  .topbar .company { font-size:13px; font-weight:600; }
+  .spacer { flex-grow:1; }
+
+  .body { display:flex; flex-grow:1; }
+
+  .sidebar { width:236px; flex-shrink:0; border-right:1px solid var(--line); padding:20px 14px; display:flex; flex-direction:column; gap:6px; }
+  .sidebar .count { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#6c6c76; padding:0 8px 10px; }
+  .prod { display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:10px; cursor:pointer; }
+  .prod:hover { background:#151519; }
+  .prod.active { background:#17171c; }
+  .prod .tile { width:28px; height:28px; border-radius:8px; display:grid; place-items:center; flex-shrink:0; }
+  .prod .name { flex-grow:1; font-size:13px; color:#c2c2ca; }
+  .prod.active .name { color:var(--text); font-weight:550; }
+  .prod .pill { font-size:11px; color:var(--dim); background:#1c1c22; border-radius:999px; padding:1px 7px; }
+  .prod.active .pill { background:#24242b; }
+
+  .main { flex-grow:1; padding:34px 44px 52px; min-width:0; }
+  .head { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .head .tile { width:40px; height:40px; border-radius:11px; display:grid; place-items:center; flex-shrink:0; }
+  .head h1 { margin:0; font-size:26px; font-weight:660; letter-spacing:-.015em; }
+  .badge { font-size:10px; letter-spacing:.06em; text-transform:uppercase; padding:4px 9px; border-radius:6px; background:rgba(124,108,240,.16); color:#b7aef7; }
+  .lead { margin:16px 0 0; max-width:900px; font-size:15px; line-height:1.65; color:#b9b9c2; }
+  .url { margin-top:8px; font-size:12px; color:var(--faint); }
+
+  .strip { margin-top:20px; display:flex; flex-wrap:wrap; border:1px solid var(--line-2); border-radius:12px; background:#131317; overflow:hidden; }
+  .strip .cell { flex:1 1 200px; padding:14px 18px; display:flex; flex-direction:column; gap:5px; }
+  .strip .cell + .cell { border-left:1px solid var(--line-2); }
+  .strip .k { font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:#7f7f89; }
+  .strip .v { font-size:12.5px; color:#c9c9d0; line-height:1.45; }
+
+  .sec { margin-top:32px; display:flex; align-items:center; gap:12px; }
+  .sec .tile { width:26px; height:26px; border-radius:8px; display:grid; place-items:center; color:#fff; flex-shrink:0; }
+  .sec .name { font-size:14px; font-weight:600; }
+  .sec .n { font-size:11px; color:#82828c; }
+  .sec .rule { flex-grow:1; height:1px; background:var(--line-2); }
+
+  .grid { margin-top:16px; display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:16px; }
+  .card { border:1px solid var(--card-line); border-radius:16px; padding:18px; background:var(--card); box-shadow:0 8px 26px -12px rgba(0,0,0,.6); display:flex; flex-direction:column; gap:10px; }
+  .card .tile { width:34px; height:34px; border-radius:10px; display:grid; place-items:center; flex-shrink:0; }
+  .card .fname { font-size:14px; font-weight:600; }
+  .card .desc { font-size:12.5px; color:var(--muted); line-height:1.55; }
+  .card ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:5px; }
+  .card li { display:flex; gap:8px; font-size:12px; color:#8f8f98; line-height:1.45; }
+  .card li::before { content:""; width:8px; height:1px; background:currentColor; margin-top:8px; flex-shrink:0; }
+  .foot { margin-top:2px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .srcbtn { font:inherit; font-size:11px; color:#9a9aa5; background:none; border:1px solid #2a2a31; border-radius:999px; padding:2px 8px; cursor:pointer; }
+  .srcbtn:hover { color:#c2c2ca; border-color:#3a3a44; }
+  .srcs { display:flex; flex-direction:column; gap:4px; font-size:12px; }
+  .srcs a, .srcs span { word-break:break-all; }
   .hidden { display:none; }
+
+  @media (max-width: 980px) {
+    .body { flex-direction:column; }
+    .sidebar { width:auto; border-right:none; border-bottom:1px solid var(--line); flex-direction:row; flex-wrap:wrap; }
+    .prod { flex:1 1 200px; }
+    .main { padding:24px 20px 40px; }
+  }
 </style>
 </head>
 <body>
@@ -70,14 +87,44 @@
 <script>
 const DATA = /*__CATALOG_JSON__*/;
 document.title = DATA.company + " — Product Teardown";
-const BANDS = [
-  "linear-gradient(90deg,#d6336c,#f06595)",
-  "linear-gradient(90deg,#e8590c,#f76707)",
-  "linear-gradient(90deg,#f08c00,#f59f00)",
-  "linear-gradient(90deg,#2f9e44,#40c057)",
-  "linear-gradient(90deg,#1971c2,#3b82f6)",
-  "linear-gradient(90deg,#7048e8,#9775fa)"
+
+const CAT = [
+  { fg:"#ec4f7c", rgb:"236,79,124", band:"linear-gradient(135deg,#d6336c,#f06595)" },
+  { fg:"#f07636", rgb:"240,118,54", band:"linear-gradient(135deg,#e8590c,#f76707)" },
+  { fg:"#f59f00", rgb:"245,159,0", band:"linear-gradient(135deg,#f08c00,#f59f00)" },
+  { fg:"#40c057", rgb:"64,192,87", band:"linear-gradient(135deg,#2f9e44,#40c057)" },
+  { fg:"#3b82f6", rgb:"59,130,246", band:"linear-gradient(135deg,#1971c2,#3b82f6)" },
+  { fg:"#9775fa", rgb:"151,117,250", band:"linear-gradient(135deg,#7048e8,#9775fa)" }
 ];
+const PRODUCT_ICONS = [
+  '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>',
+  '<path d="M12 3l9 5-9 5-9-5 9-5Z"/><path d="M3 13l9 5 9-5"/>',
+  '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l1.6 1.6M16.4 16.4L18 18M18 6l-1.6 1.6M7.6 16.4L6 18"/>',
+  '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>',
+  '<circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M6 8.5v7M8 6h4a4 4 0 0 1 4 4M8 18h4a4 4 0 0 0 4-4"/>',
+  '<path d="M13 3L5 13h5l-1 8 8-10h-5l1-8Z"/>'
+];
+const CAT_ICONS = [
+  '<rect x="3.5" y="4.5" width="17" height="6" rx="1.5"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+  '<path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/>',
+  '<path d="M12 3l9 5-9 5-9-5 9-5Z"/><path d="M3 13l9 5 9-5"/>',
+  '<circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="12" r="2"/><path d="M8 6h4a4 4 0 0 1 4 4M8 18h4a4 4 0 0 0 4-4"/>',
+  '<path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6L12 4Z"/>',
+  '<path d="M13 3L5 13h5l-1 8 8-10h-5l1-8Z"/>'
+];
+const FEATURE_ICONS = [
+  '<path d="M12 4v6M12 14v6M4 12h6M14 12h6"/><path d="M6.5 6.5l3 3M14.5 14.5l3 3M17.5 6.5l-3 3M6.5 17.5l3-3"/>',
+  '<circle cx="12" cy="12" r="8"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/>',
+  '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
+  '<path d="M7 8h11l-3-3M17 16H6l3 3"/>',
+  '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
+  '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/>',
+  '<path d="M9 15l6-6M10.5 6.5l1.8-1.8a4 4 0 0 1 5.7 5.7L15.5 12M13.5 17.5l-1.8 1.8a4 4 0 0 1-5.7-5.7L8.5 12"/>',
+  '<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7M9 8h4"/>',
+  '<path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4-4"/><circle cx="12" cy="15" r="1"/>',
+  '<path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0V8Z"/><path d="M12 17v4"/>'
+];
+
 let active = 0;
 
 function el(tag, props, ...kids) {
@@ -89,89 +136,125 @@ function el(tag, props, ...kids) {
   }
   return n;
 }
-function featureCount(p) {
-  return p.categories.reduce((s, c) => s + c.features.length, 0);
+function iconSvg(paths, size) {
+  return '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size +
+    '" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+    paths + '</svg>';
 }
+function tile(cls, paths, size, styles) {
+  const s = el("span", { className: cls });
+  Object.assign(s.style, styles || {});
+  s.innerHTML = iconSvg(paths, size);
+  return s;
+}
+function featureCount(p) {
+  return (p.categories || []).reduce((s, c) => s + (c.features || []).length, 0);
+}
+function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
+
 function render() {
   const app = document.getElementById("app");
   app.innerHTML = "";
-  const totalFeat = DATA.products.reduce((s, p) => s + featureCount(p), 0);
+  const products = DATA.products || [];
+  const totalFeat = products.reduce((s, p) => s + featureCount(p), 0);
 
+  const gi = el("span", { className: "gicon" });
+  gi.innerHTML = iconSvg(PRODUCT_ICONS[3], 15);
   app.append(el("div", { className: "topbar" },
+    gi,
     el("span", { className: "crumb" }, "Products"),
+    el("span", { className: "spacer" }),
     el("span", { className: "company" }, DATA.company)));
+
+  const body = el("div", { className: "body" });
 
   const side = el("div", { className: "sidebar" });
   side.append(el("div", { className: "count" },
-    DATA.products.length + " products · " + totalFeat + " features"));
-  DATA.products.forEach((p, i) => {
-    const item = el("div", { className: "prod-item" + (i === active ? " active" : "") },
-      el("div", { className: "name" }, p.name),
-      el("div", { className: "sub" }, featureCount(p) + " features"));
-    item.onclick = () => { active = i; render(); window.scrollTo(0, 0); };
-    side.append(item);
+    plural(products.length, "product") + " · " + plural(totalFeat, "feature")));
+  products.forEach((p, i) => {
+    const c = CAT[i % CAT.length];
+    const row = el("div", { className: "prod" + (i === active ? " active" : "") });
+    row.append(
+      tile("tile", PRODUCT_ICONS[i % PRODUCT_ICONS.length], 16,
+        { background: "rgba(" + c.rgb + "," + (i === active ? ".16" : ".14") + ")", color: c.fg }),
+      el("span", { className: "name" }, p.name),
+      el("span", { className: "pill" }, String(featureCount(p))));
+    row.onclick = () => { active = i; render(); window.scrollTo(0, 0); };
+    side.append(row);
   });
-  app.append(side);
-
-  app.append(renderMain(DATA.products[active]));
+  body.append(side);
+  body.append(renderMain(products[active] || { name: "", categories: [] }));
+  app.append(body);
 }
 function renderMain(p) {
   const main = el("div", { className: "main" });
-  const h1 = el("h1", {}, p.name);
-  if (p.status) h1.append(el("span", { className: "badge" }, p.status));
-  main.append(h1);
-  main.append(el("div", { className: "desc" }, p.description));
+  const c0 = CAT[active % CAT.length];
+
+  const head = el("div", { className: "head" });
+  head.append(tile("tile", PRODUCT_ICONS[active % PRODUCT_ICONS.length], 22,
+    { background: "rgba(" + c0.rgb + ",.16)", color: c0.fg }));
+  head.append(el("h1", {}, p.name));
+  if (p.status) head.append(el("span", { className: "badge" }, p.status));
+  main.append(head);
+
+  main.append(el("p", { className: "lead" }, p.description || ""));
   if (p.url) main.append(el("div", { className: "url" }, p.url));
 
-  [["Positioning", p.positioning],
-   ["Target audience", p.targetAudience],
-   ["Pricing", p.pricing]].forEach(([label, val]) => {
-    if (!val) return;
-    main.append(el("div", { className: "block" },
-      el("div", { className: "label" }, label),
-      el("div", {}, val)));
+  const meta = [["Positioning", p.positioning], ["Audience", p.targetAudience], ["Pricing", p.pricing]]
+    .filter(function (kv) { return kv[1]; });
+  if (meta.length) {
+    const strip = el("div", { className: "strip" });
+    meta.forEach(function (kv) {
+      strip.append(el("div", { className: "cell" },
+        el("span", { className: "k" }, kv[0]),
+        el("span", { className: "v" }, kv[1])));
+    });
+    main.append(strip);
+  }
+
+  (p.categories || []).forEach((cat, ci) => {
+    const c = CAT[ci % CAT.length];
+    const sec = el("div", { className: "sec" });
+    sec.append(tile("tile", CAT_ICONS[ci % CAT_ICONS.length], 15, { background: c.band }));
+    sec.append(el("span", { className: "name" }, cat.name));
+    const feats = cat.features || [];
+    sec.append(el("span", { className: "n" }, plural(feats.length, "feature")));
+    sec.append(el("span", { className: "rule" }));
+    main.append(sec);
+
+    const grid = el("div", { className: "grid" });
+    feats.forEach((f, fi) => grid.append(renderCard(f, c, fi)));
+    main.append(grid);
   });
 
-  const feats = el("div", { className: "features" });
-  feats.append(el("div", { className: "label" }, "Features (" + featureCount(p) + ")"));
-  p.categories.forEach((c, ci) => {
-    const band = el("div", { className: "cat-band" }, c.name,
-      el("span", { className: "n" }, c.features.length + " features"));
-    band.style.background = BANDS[ci % BANDS.length];
-    feats.append(band);
-    c.features.forEach(f => feats.append(renderFeature(f)));
-  });
-  main.append(feats);
   return main;
 }
-function renderFeature(f) {
-  const row = el("div", { className: "feat" });
-  row.append(el("div", { className: "fname" }, f.name));
+function renderCard(f, c, fi) {
+  const card = el("div", { className: "card" });
+  card.append(tile("tile", FEATURE_ICONS[fi % FEATURE_ICONS.length], 18,
+    { background: "rgba(" + c.rgb + ",.13)", color: c.fg }));
+  card.append(el("div", { className: "fname" }, f.name));
+  card.append(el("div", { className: "desc" }, f.description || ""));
 
-  const mid = el("div", {}, el("div", {}, f.description));
   if (Array.isArray(f.points) && f.points.length) {
     const ul = el("ul");
     f.points.forEach(pt => ul.append(el("li", {}, pt)));
-    mid.append(ul);
+    card.append(ul);
   }
-  const srcs = el("div", { className: "srcs hidden" });
-  (f.sources || []).forEach(u => {
-    const ok = /^https?:\/\//i.test(String(u));
-    srcs.append(ok
-      ? el("a", { href: u, target: "_blank", rel: "noopener" }, u)
-      : el("div", {}, u));
-  });
-  const n = (f.sources || []).length;
-  const btn = el("button", {}, "View details");
-  btn.onclick = () => srcs.classList.toggle("hidden");
-  mid.append(
-    el("div", { className: "srcline" },
-      n + (n === 1 ? " web source " : " web sources "), btn),
-    srcs);
-  row.append(mid);
 
-  row.append(el("div", { className: "fstatus" }, f.status || ""));
-  return row;
+  const srcs = f.sources || [];
+  const box = el("div", { className: "srcs hidden" });
+  srcs.forEach(u => {
+    const ok = /^https?:\/\//i.test(String(u));
+    box.append(ok
+      ? el("a", { href: u, target: "_blank", rel: "noopener" }, u)
+      : el("div", {}, String(u)));
+  });
+  const btn = el("button", { className: "srcbtn" }, plural(srcs.length, "source"));
+  btn.onclick = () => box.classList.toggle("hidden");
+  card.append(el("div", { className: "foot" }, btn), box);
+
+  return card;
 }
 render();
 </script>
