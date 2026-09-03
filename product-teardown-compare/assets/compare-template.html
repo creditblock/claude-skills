@@ -35,7 +35,7 @@
   a { color:var(--link); text-decoration:none; }
   a:hover { color:var(--link-hover); text-decoration:underline; }
   svg { display:block; }
-  #app { min-height:100vh; max-width:100%; display:flex; flex-direction:column; }
+  #app { height:100vh; max-width:100%; display:flex; flex-direction:column; }
 
   .topbar { display:flex; align-items:center; gap:12px; padding:14px 22px; border-bottom:1px solid var(--line); background:var(--panel); }
   .topbar .title { font-size:15px; font-weight:650; }
@@ -49,7 +49,7 @@
   .ctl:hover { color:var(--text); border-color:var(--btn-line-hover); }
   .ctl[aria-pressed="true"] { color:var(--text); border-color:var(--link); background:var(--ctl-on); }
 
-  .scroller { overflow-x:auto; }
+  .scroller { flex:1 1 auto; min-height:0; overflow:auto; }
   table.matrix { border-collapse:separate; border-spacing:0; width:max-content; min-width:100%; }
   table.matrix th, table.matrix td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); text-align:left; vertical-align:top; }
   table.matrix th:last-child, table.matrix td:last-child { border-right:none; }
@@ -61,6 +61,8 @@
   .co .logo { width:24px; height:24px; border-radius:6px; object-fit:cover; flex-shrink:0; }
   .co .mono { width:24px; height:24px; border-radius:6px; display:grid; place-items:center; font-size:10px; font-weight:700; flex-shrink:0; }
   .co .cname { font-size:13px; font-weight:600; }
+  a.cname { color: inherit; text-decoration: none; }
+  a.cname:hover { text-decoration: underline; }
   .co .cnote { margin-top:5px; font-size:11px; color:var(--dim); line-height:1.4; }
   .co .score { margin-top:7px; display:inline-flex; align-items:center; font-size:11px; color:var(--muted); background:var(--chip); border-radius:999px; padding:2px 9px; }
   .co .score b { color:var(--text); font-weight:600; }
@@ -208,7 +210,8 @@ function render() {
     el("span", { className: "spacer" }),
     toggle));
 
-  const diffBtn = el("button", { className: "ctl", "aria-pressed": "false" }, "Differences only");
+  const diffBtn = el("button", { className: "ctl" }, "Differences only");
+  diffBtn.setAttribute("aria-pressed", "false");
   diffBtn.onclick = function () {
     const on = table.classList.toggle("diffonly");
     diffBtn.setAttribute("aria-pressed", on ? "true" : "false");
@@ -240,7 +243,10 @@ function render() {
   hr.append(el("th", { className: "corner" }, "Capability"));
   DATA.companies.forEach(function (c, i) {
     const th = el("th", { className: "co" });
-    th.append(el("div", { className: "chead" }, logoNode(c, i), el("span", { className: "cname" }, c.name)));
+    const nameEl = (typeof c.url === "string" && /^https?:\/\//i.test(c.url))
+      ? el("a", { className: "cname", href: c.url, target: "_blank", rel: "noopener" }, c.name)
+      : el("span", { className: "cname" }, c.name);
+    th.append(el("div", { className: "chead" }, logoNode(c, i), nameEl));
     if (c.note) th.append(el("div", { className: "cnote" }, c.note));
     const chip = el("span", { className: "score" }, el("b", {}, String(sc[c.name].yes)), " yes");
     if (sc[c.name].partial) chip.append(" · " + sc[c.name].partial + " partial");
@@ -292,7 +298,8 @@ function render() {
           detail.append(el("a", { href: cell.source, target: "_blank", rel: "noopener" }, cell.source));
         }
         td.append(detail);
-        td.onclick = function () {
+        td.onclick = function (e) {
+          if (e.target.closest("a")) return;
           const open = td.classList.toggle("open");
           detail.classList.toggle("hidden", !open);
         };

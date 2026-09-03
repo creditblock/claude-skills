@@ -4,7 +4,7 @@
   "theme": "dark",
   "companies": [
     { "name": "Secoda", "url": "https://www.secoda.co/", "note": "AI platform for data and analytics" },
-    { "name": "Atlan", "url": "https://atlan.com/", "note": "The context layer for AI" },
+    { "name": "Atlan", "url": "https://atlan.com/", "note": "Metadata and context platform for AI" },
     { "name": "Collibra", "url": "https://www.collibra.com/", "note": "Enterprise data governance platform" }
   ],
   "themes": [

@@ -124,6 +124,12 @@ class RenderCompareTests(unittest.TestCase):
             self.assertTrue(produced.exists())
             self.assertTrue(produced.name.endswith("-compare.html"))
 
+    def test_directory_input_fails_cleanly(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = run([d])  # a directory, not a file
+            self.assertEqual(r.returncode, 1)
+            self.assertIn("cannot read", r.stderr)
+
     def test_status_survives_into_blob(self):
         doc = {"companies": [{"name": "A"}, {"name": "B"}], "themes": [{"name": "T", "capabilities": [
             {"name": "C", "cells": {"A": {"status": "partial"}, "B": {"status": "unknown"}}}]}]}

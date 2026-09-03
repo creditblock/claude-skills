@@ -86,6 +86,8 @@ def main(argv):
         fail(f"input not found: {src}")
     except json.JSONDecodeError as e:
         fail(f"invalid JSON: {e}")
+    except OSError as e:
+        fail(f"cannot read {src}: {e}")
 
     validate(data)
 
